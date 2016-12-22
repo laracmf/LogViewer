@@ -1,25 +1,25 @@
-{!! $paginator->render() !!}
+{!! $paginator->links() !!}
 @if($log)
-    <?php $c = 1; ?>
-    @foreach($log as $l)
+    <?php $i = 1; ?>
+    @foreach($logs as $log)
         <div class="alert">
             <div class="panel-group" id="accordion">
                 <div class="panel panel-default">
-                    <div class="log log-{{ $l['level'] }}">
+                    <div class="log log-{{ $log['level'] }}">
                         <h4 class="panel-title">
-                            @if($l['stack'] !== "\n")
+                            @if($log['stack'] !== "\n")
                                 <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion"
-                                   href="#collapse-{{ $c }}">
+                                   href="#collapse-{{ $i }}">
                                     @endif
-                                    {{ $l['header'] }}
+                                    {{ $log['header'] }}
                                 </a>
                         </h4>
                     </div>
-                    @if($l['stack'] !== "\n")
-                        <div id="collapse-{{ $c }}" class="panel-collapse collapse">
+                    @if($log['stack'] !== "\n")
+                        <div id="collapse-{{ $i }}" class="panel-collapse collapse">
                             <div class="panel-body">
                                 <pre>
-                                    {{ $l['stack'] }}
+                                    {{ $log['stack'] }}
                                 </pre>
                             </div>
                         </div>
@@ -27,9 +27,8 @@
                 </div>
             </div>
         </div>
-        <?php $c++; ?>
+        <?php $i++; ?>
     @endforeach
 @else
     <div class="alert alert-danger">There are no log entries within these constraints.</div>
 @endif
-{!! $paginator->render() !!}

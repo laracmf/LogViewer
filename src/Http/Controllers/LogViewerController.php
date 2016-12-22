@@ -149,6 +149,6 @@ class LogViewerController extends Controller
             $log = $data;
         }
 
-        return View::make('logviewer::data', compact('paginator', 'log'));
+        return View::make('logviewer::data', compact('paginator', 'logs'));
     }
 }
