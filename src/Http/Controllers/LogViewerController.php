@@ -144,9 +144,9 @@ class LogViewerController extends Controller
         $path->setValue($paginator, URL::route('logviewer.index').'/'.$date.'/'.$level);
 
         if (count($data) > $paginator->perPage()) {
-            $log = array_slice($data, $paginator->firstItem() - 1, $paginator->perPage());
+            $logs = array_slice($data, $paginator->firstItem() - 1, $paginator->perPage());
         } else {
-            $log = $data;
+            $logs = $data;
         }
 
         return View::make('logviewer::data', compact('paginator', 'logs'));
