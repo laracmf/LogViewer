@@ -1,5 +1,5 @@
 {!! $paginator->links() !!}
-@if($log)
+@if($logs)
     <?php $i = 1; ?>
     @foreach($logs as $log)
         <div class="alert">
