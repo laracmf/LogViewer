@@ -13,6 +13,7 @@ namespace GrahamCampbell\LogViewer\Http\Controllers;
 
 use Carbon\Carbon;
 use GrahamCampbell\LogViewer\Facades\LogViewer;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Input;
@@ -114,12 +115,12 @@ class LogViewerController extends Controller
             'logs'       => $logs,
             'date'       => $date,
             'url'        => 'logviewer',
-            'data_url'   => URL::route('logviewer.index').'/data/'.$date.'/'.$level.'?page='.$page,
+            'data_url'   => route('logviewer.index').'/data/'.$date.'/'.$level.'?page='.$page,
             'levels'     => LogViewer::levels(),
             'current'    => $level,
         ];
 
-        return View::make('logviewer::show', $data);
+        return view('logviewer::show', $data);
     }
 
     /**
@@ -137,11 +138,11 @@ class LogViewerController extends Controller
         }
 
         $data = LogViewer::data($date, $level);
-        $paginator = new Paginator($data, $this->perPage);
+        $paginator = new LengthAwarePaginator($data, count($data), $this->perPage);
 
         $path = (new \ReflectionClass($paginator))->getProperty('path');
         $path->setAccessible(true);
-        $path->setValue($paginator, URL::route('logviewer.index').'/'.$date.'/'.$level);
+        $path->setValue($paginator, route('logviewer.index').'/'.$date.'/'.$level);
 
         if (count($data) > $paginator->perPage()) {
             $logs = array_slice($data, $paginator->firstItem() - 1, $paginator->perPage());
@@ -149,6 +150,6 @@ class LogViewerController extends Controller
             $logs = $data;
         }
 
-        return View::make('logviewer::data', compact('paginator', 'logs'));
+        return view('logviewer::data', compact('paginator', 'logs'));
     }
 }
