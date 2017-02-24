@@ -63,4 +63,4 @@ Laravel LogViewer will register four routes. The only one of interest to you is 
 
 ## License
 
-Laravel LogViewer is licensed under [The MIT License (MIT)](LICENSE).
+Based on Laravel LogViewer that licensed under [The MIT License (MIT)](LICENSE).
